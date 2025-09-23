@@ -156,12 +156,12 @@
       <!-- Requirement Details with heading -->
       <fieldset>
         <legend>Requirement Details</legend>
+<label>Upload a File:<span style="color: red;">*</span></label>
+<input type="file" name="requirement_file" required accept=".pdf,.doc,.docx,.xlsx,.txt,.csv" multiple />
 
-        <label>Upload a File:<span style="color: red;">*</span></label>
-        <input type="file" name="requirement_file" required accept=".pdf,.doc,.docx,.xlsx,.txt,.csv" />
+<label>Upload an Image:</label>
+<input type="file" name="requirement_image" accept="image/*" />
 
-        <label>Upload an Image:</label>
-        <input type="file" name="requirement_image" accept="image/*" />
       </fieldset>
 
       <div class="submit-container">
@@ -189,14 +189,17 @@ document.getElementById('feasibilityForm').addEventListener('submit', async func
   const data = {};
   const filePromises = [];
 
+  // Process each form entry
   formData.forEach((value, key) => {
     if (value instanceof File) {
+      // If multiple files selected for the same field
+      if (!data[key]) data[key] = [];
       const p = fileToBase64(value).then(base64 => {
-        data[key] = {
+        data[key].push({
           filename: value.name,
           type: value.type,
           content: base64
-        };
+        });
       });
       filePromises.push(p);
     } else {
