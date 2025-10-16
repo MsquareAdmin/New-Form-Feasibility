@@ -241,7 +241,8 @@ document.getElementById('feasibilityForm').addEventListener('submit', async func
       reader.readAsDataURL(file);
     });
   }
-
+const today = new Date().toISOString().split('T')[0];
+document.querySelector('input[name="review_date"]').value = today;
   const data = {};
   const filePromises = [];
 
