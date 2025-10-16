@@ -217,7 +217,22 @@ document.getElementById('feasibilityForm').addEventListener('submit', async func
       reader.readAsDataURL(file);
     });
   }
+window.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
 
+  const ref = params.get('ref');
+  const title = params.get('title');
+  const engineer = params.get('engineer');
+
+  if (ref) document.getElementById('reference_number').value = ref;
+  if (title) document.querySelector('input[name="project_title"]').value = title;
+
+  // Set today's date automatically
+  const today = new Date().toISOString().split('T')[0];
+  document.querySelector('input[name="review_date"]').value = today;
+
+  if (engineer) document.querySelector('select[name="engineer_name"]').value = engineer;
+});
   const data = {};
   const filePromises = [];
 
